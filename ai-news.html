@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 资讯 | Cyberpunk News Feed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a1a;
+            --bg-card: #1a1a2e;
+            --neon-cyan: #00f5ff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #7b2cbf;
+            --neon-green: #00ff88;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border-glow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan), 0 0 30px var(--neon-purple);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #16213e 50%, var(--bg-card) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 网格背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 扫描线效果 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 头部样式 */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .header .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            letter-spacing: 5px;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-pink), transparent);
+            box-shadow: var(--border-glow);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--neon-purple), var(--neon-cyan), transparent);
+            box-shadow: var(--border-glow);
+        }
+
+        .header-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--neon-cyan);
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+
+        .info-item .label {
+            color: var(--text-secondary);
+            margin-right: 10px;
+        }
+
+        .info-item .value {
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+
+        /* 卡片网格 */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            padding: 10px;
+        }
+
+        /* 新闻卡片 */
+        .news-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-cyan);
+            box-shadow:
+                0 5px 20px rgba(0, 245, 255, 0.2),
+                0 0 30px rgba(123, 44, 191, 0.1);
+        }
+
+        .news-card:hover::before {
+            opacity: 1;
+        }
+
+        .news-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .news-card:hover::after {
+            opacity: 1;
+        }
+
+        /* 卡片内容 */
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(123, 44, 191, 0.2));
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            line-height: 1.4;
+            min-height: 60px;
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            min-height: 80px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 245, 255, 0.2);
+        }
+
+        .card-link {
+            color: var(--neon-green);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .card-link:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .card-link::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .card-link:hover::after {
+            transform: translateX(5px);
+        }
+
+        .card-date {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* 装饰元素 */
+        .corner-decor {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .corner-decor.top-left {
+            top: 20px;
+            left: 20px;
+            border-top: 2px solid var(--neon-cyan);
+            border-left: 2px solid var(--neon-cyan);
+        }
+
+        .corner-decor.top-right {
+            top: 20px;
+            right: 20px;
+            border-top: 2px solid var(--neon-pink);
+            border-right: 2px solid var(--neon-pink);
+        }
+
+        .corner-decor.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            border-bottom: 2px solid var(--neon-purple);
+            border-left: 2px solid var(--neon-purple);
+        }
+
+        .corner-decor.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            border-bottom: 2px solid var(--neon-cyan);
+            border-right: 2px solid var(--neon-cyan);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .header-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .corner-decor {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        /* 加载动画 */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: var(--neon-cyan);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* 错误状态 */
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: var(--neon-pink);
+            border: 1px solid var(--neon-pink);
+            border-radius: 10px;
+            background: rgba(255, 0, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="corner-decor top-left"></div>
+    <div class="corner-decor top-right"></div>
+    <div class="corner-decor bottom-left"></div>
+    <div class="corner-decor bottom-right"></div>
+
+    <div class="container">
+        <header class="header">
+            <h1>AI 资讯</h1>
+            <div class="subtitle">CYBERPUNK NEWS FEED</div>
+            <div class="header-info">
+                <div class="info-item">
+                    <span class="label">DATE:</span>
+                    <span class="value" id="current-date">2026-04-04</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">NEWS:</span>
+                    <span class="value" id="news-count">0</span>
+                </div>
+            </div>
+        </header>
+
+        <div id="news-container">
+            <div class="loading">系统初始化中...</div>
+        </div>
+    </div>
+
+    <script src="ai-news-data.js"></script>
+    <script>
+        // 渲染新闻卡片
+        function renderNews() {
+            const container = document.getElementById('news-container');
+            const newsCountElement = document.getElementById('news-count');
+
+            // 检查数据是否存在
+            if (typeof NEWS_DATA === 'undefined') {
+                container.innerHTML = '<div class="error">数据加载失败：未找到 AI 资讯数据</div>';
+                return;
+            }
+
+            if (!Array.isArray(NEWS_DATA) || NEWS_DATA.length === 0) {
+                container.innerHTML = '<div class="error">暂无资讯数据</div>';
+                return;
+            }
+
+            // 更新新闻条数
+            newsCountElement.textContent = NEWS_DATA.length;
+
+            // 生成卡片 HTML
+            const cardsHTML = NEWS_DATA.map((news, index) => {
+                const tagsHTML = news.tags && news.tags.length > 0
+                    ? news.tags.map(tag => `<span class="tag">${tag}</span>`).join('')
+                    : '<span class="tag">AI</span>';
+
+                return `
+                    <article class="news-card">
+                        <div class="card-tags">${tagsHTML}</div>
+                        <h2 class="card-title">${news.title || '无标题'}</h2>
+                        <p class="card-description">${news.description || '暂无描述'}</p>
+                        <div class="card-footer">
+                            <a href="${news.link || '#'}" target="_blank" class="card-link">查看原文</a>
+                            <span class="card-date">${getCurrentDate()}</span>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            container.innerHTML = `<div class="news-grid">${cardsHTML}</div>`;
+
+            // 添加进入动画
+            const cards = container.querySelectorAll('.news-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        // 获取当前日期
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', () => {
+            // 设置日期
+            document.getElementById('current-date').textContent = getCurrentDate();
+
+            // 延迟渲染以确保数据加载完成
+            setTimeout(renderNews, 100);
+        });
+    </script>
+</body>
+</html>
