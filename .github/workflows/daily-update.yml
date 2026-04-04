@@ -1,0 +1,155 @@
+name: Daily AI News Update
+
+on:
+  # 北京时间每天早上8点 (UTC 0:00)
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch AI News
+        id: fetch-news
+        run: |
+          echo "开始抓取 AI 资讯..."
+          echo "当前时间: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+          # 安装依赖
+          npm install axios cheerio puppeteer
+
+          # 创建抓取脚本
+          cat > fetch-news.js << 'EOF'
+          const axios = require('axios');
+          const cheerio = require('cheerio');
+          const puppeteer = require('puppeteer');
+          const fs = require('fs');
+
+          async function fetchAIBase() {
+            const response = await axios.get('https://www.aibase.com/zh/news');
+            const $ = cheerio.load(response.data);
+            const articles = [];
+
+            $('a[href*="/zh/news/"]').slice(0, 10).each((i, elem) => {
+              const title = $(elem).text().trim();
+              const link = 'https://www.aibase.com' + $(elem).attr('href');
+              if (title && link && title.length < 200) {
+                articles.push({
+                  title: title.replace(/\\s+/g, ' ').substring(0, 100),
+                  description: '从AIBase抓取的最新AI资讯',
+                  link: link,
+                  tags: ['AI', 'AIBase', '新闻']
+                });
+              }
+            });
+
+            return articles;
+          }
+
+          async function fetch36Kr() {
+            const response = await axios.get('https://www.36kr.com/information/AI/');
+            const $ = cheerio.load(response.data);
+            const articles = [];
+
+            $('a[href^="/p/"]').slice(0, 5).each((i, elem) => {
+              const title = $(elem).text().trim();
+              const href = $(elem).attr('href');
+              const link = href.startsWith('http') ? href : 'https://www.36kr.com' + href;
+
+              if (title && href && title.length > 10 && title.length < 200) {
+                if (!title.includes('查看更多') && !title.includes('热门')) {
+                  articles.push({
+                    title: title.substring(0, 100),
+                    description: '从36氪抓取的最新AI资讯',
+                    link: link,
+                    tags: ['AI', '36氪', '科技']
+                  });
+                }
+              }
+            });
+
+            return articles;
+          }
+
+          async function main() {
+            try {
+              // 抓取两个数据源
+              const [aibaseNews, krNews] = await Promise.all([
+                fetchAIBase(),
+                fetch36Kr()
+              ]);
+
+              // 合并数据
+              const allNews = [...aibaseNews, ...krNews];
+
+              // 生成 JS 文件
+              const jsContent = 'const NEWS_DATA = ' + JSON.stringify(allNews, null, 2) + ';';
+              fs.writeFileSync('ai-news-data.js', jsContent, 'utf8');
+
+              console.log('✓ 成功抓取 ' + allNews.length + ' 条资讯');
+              console.log('✓ 数据文件已生成: ai-news-data.js');
+
+            } catch (error) {
+              console.error('抓取失败:', error.message);
+              process.exit(1);
+            }
+          }
+
+          main();
+          EOF
+
+          # 运行抓取脚本
+          node fetch-news.js
+
+      - name: Commit changes
+        run: |
+          git config --local user.email 'action@github.com'
+          git config --local user.name 'GitHub Actions'
+          git add ai-news-data.js
+          git diff --staged --quiet || git commit -m "chore: 更新 AI 资讯数据 [$(date -u '+%Y-%m-%d')]"
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-workflow-dispatch@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: deploy-to-pages
+          inputs: |
+            {
+              "run_id": "${{ github.run_id }}"
+            }
+EOF
+
+  deploy-to-pages:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to GitHub Pages
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: '.'
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-news-data
+          path: ai-news-data.js
+          retention-days: 30
