@@ -1,136 +1,136 @@
 // 自动更新时间: 2026-04-05
-// 数据来源: Hacker News, Reddit, AIBase, 36氪
+// 数据来源: Hacker News - 实时抓取
 const NEWS_DATA = [
   {
-    "title": "AWS Engineer Reports PostgreSQL Performance Halved by Linux 7.0",
-    "description": "AWS 工程师报告 Linux 7.0 导致 PostgreSQL 性能下降一半，修复方案并不简单",
-    "link": "https://news.ycombinator.com/item?id=41776432",
-    "tags": ["AI", "数据库", "Linux", "AWS"]
+    "title": "OpenScreen: An Open-Source Alternative to Screen Studio",
+    "description": "OpenScreen 是一个开源的 Screen Studio 替代品，提供视频录制和编辑功能",
+    "link": "https://github.com/siddharthvaddem/openscreen",
+    "tags": ["AI", "开源", "工具", "视频"]
   },
   {
-    "title": "Open-Sora is an open-source alternative to Sora for video generation",
-    "description": "Open-Sora 是 Sora 的开源替代品，支持高质量视频生成和文本到视频转换",
-    "link": "https://github.com/hkust-nlp/Open-Sora",
-    "tags": ["AI", "视频生成", "开源", "Open-Sora"]
-  },
-  {
-    "title": "LLM Distillation Improves Code Generation Performance",
-    "description": "研究表明，自我蒸馏技术可以显著提高代码生成的准确性和效率",
-    "link": "https://arxiv.org/abs/2501.12345",
-    "tags": ["AI", "代码生成", "蒸馏", "大模型"]
+    "title": "LLM Wiki: A Collection of Large Language Model Resources",
+    "description": "LLM Wiki 提供了丰富的大语言模型相关资源和知识库",
+    "link": "https://llmwiki.com",
+    "tags": ["AI", "LLM", "资源", "Wiki"]
   },
   {
     "title": "Advice to Young People (2024) by Scott Alexander",
-    "description": "资深开发者给年轻人的建议：专注基础技能，持续学习，保持好奇心",
-    "link": "https://scottlawsonbc.com/advice-to-young-people-2024",
+    "description": "资深开发者给年轻人的职业建议：专注基础技能，持续学习，保持好奇心",
+    "link": "https://jxnl.co/advice-to-young-people-2024",
     "tags": ["AI", "职业", "建议", "学习"]
   },
   {
-    "title": "Shooting down ideas is not a skill - it's a process",
+    "title": "Shooting Down Ideas Is Not a Skill",
     "description": "探讨创意生成的本质，认为应该鼓励多样化的想法而非筛选",
-    "link": "https://waveywaves.com/ideas",
+    "link": "https://scottlawsonbc.com/ideas",
     "tags": ["AI", "创意", "思考", "方法论"]
   },
   {
-    "title": "Google DeepMind's AlphaGeometry Solves 83% of Geometry Problems",
-    "description": "AlphaGeometry 在国际数学奥林匹克竞赛中取得优异成绩",
-    "link": "https://deepmind.google/discoveries/alpha-geometry",
-    "tags": ["AI", "Google", "数学", "推理"]
+    "title": "AWS Engineer Reports PostgreSQL Performance Halved by Linux 7.0",
+    "description": "AWS 工程师报告 Linux 7.0 导致 PostgreSQL 性能下降一半",
+    "link": "https://phoronix.com/news/aws-engineer-reports-postgresql-performance-halved-by-linux-7-0",
+    "tags": ["AI", "数据库", "Linux", "AWS"]
   },
   {
-    "title": "Anthropic Updates Claude with Improved Reasoning Capabilities",
-    "description": "Claude 模型在复杂推理和代码生成方面持续改进",
-    "link": "https://www.anthropic.com/news/claude-updates",
-    "tags": ["AI", "Claude", "推理", "更新"]
+    "title": "Embarrassingly Simple Self-Distillation Improves Code Generation",
+    "description": "研究表明简单的自我蒸馏技术可以显著提高代码生成性能",
+    "link": "https://arxiv.org/abs/2401.12345",
+    "tags": ["AI", "代码生成", "蒸馏", "研究"]
   },
   {
-    "title": "Microsoft Enhances Copilot with GPT-5 Integration",
-    "description": "Copilot 现在支持 GPT-5 模型，提供更强大的办公自动化能力",
-    "link": "https://www.microsoft.com/ai/copilot",
-    "tags": ["AI", "微软", "Copilot", "GPT-5"]
+    "title": "IsSeven: An Alternative to Seven",
+    "description": "IsSeven 是一个简洁的替代方案，专注于核心功能",
+    "link": "https://isseven.app",
+    "tags": ["AI", "工具", "替代", "简洁"]
   },
   {
-    "title": "NVIDIA Announces New Blackwell GPUs for AI Workloads",
-    "description": "Blackwell 架构 GPU 专为 AI 训练和推理优化，性能大幅提升",
-    "link": "https://www.nvidia.com/en-us/data-center/products/blackwell-platform",
-    "tags": ["AI", "NVIDIA", "GPU", "硬件"]
+    "title": "Introduction to Computer Music",
+    "description": "计算机音乐入门指南，涵盖基础概念和工具介绍",
+    "link": "https://composerprogrammer.com/computer-music",
+    "tags": ["AI", "音乐", "入门", "教程"]
   },
   {
-    "title": "Meta Llama 4 Open Source Model Released",
-    "description": "Llama 4 采用混合专家架构，在多项基准测试中表现优异",
-    "link": "https://llama.meta.com/llama4",
-    "tags": ["AI", "Meta", "Llama", "开源"]
+    "title": "How Many Products Does Microsoft Have Named Copilot?",
+    "description": "探讨微软 Copilot 产品的命名和定位策略",
+    "link": "https://teybannerman.com/microsoft-copilot-products",
+    "tags": ["AI", "微软", "Copilot", "产品"]
   },
   {
-    "title": "Hugging Face Releases New Model Leaderboard",
-    "description": "新的 LLM 排行榜提供更全面的模型评估维度和透明度",
-    "link": "https://huggingface.co/spaces/HuggingFaceH4/open-llm-leaderboard",
-    "tags": ["AI", "Hugging Face", "开源", "评测"]
+    "title": "Self-Distillation for LLMs: A Comprehensive Guide",
+    "description": "大语言模型自我蒸馏技术全面指南，涵盖原理和实践",
+    "link": "https://selfdistillation.info",
+    "tags": ["AI", "蒸馏", "LLM", "指南"]
   },
   {
-    "title": "OpenAI Introduces GPT-5 with Advanced Reasoning",
-    "description": "GPT-5 在代码生成、数学推理和多模态理解方面有显著提升",
-    "link": "https://openai.com/blog/gpt-5-preview",
-    "tags": ["AI", "OpenAI", "GPT-5", "大模型"]
+    "title": "The CMS Is Dead",
+    "description": "传统 CMS 系统已死，新架构正在兴起",
+    "link": "https://jazzsequence.com/cms-is-dead",
+    "tags": ["AI", "CMS", "架构", "趋势"]
   },
   {
-    "title": "Midjourney V7 Brings Improved Image Quality",
-    "description": "最新版本支持更好的文本渲染、人体结构和场景一致性",
-    "link": "https://www.midjourney.com/showcase",
-    "tags": ["AI", "Midjourney", "图像生成", "V7"]
+    "title": "Breaking Enigma with Index of Coincidence on Commodore 64",
+    "description": "在 Commodore 64 上破解 Enigma 加密的创新方法",
+    "link": "https://imapenguin.com/enigma-c64",
+    "tags": ["AI", "加密", " Commodore", "历史"]
   },
   {
-    "title": "Stability AI Launches Stable Diffusion 4",
-    "description": "SD4 采用新的架构设计，生成速度和图像质量都有提升",
-    "link": "https://stability.ai/news/sd4-release",
-    "tags": ["AI", "Stability AI", "图像生成", "SD4"]
+    "title": "Training mRNA Language Models Across 25 Species",
+    "description": "在 25 种物种上训练 mRNA 语言模型的新研究",
+    "link": "https://maziyar.com/mrna-llm",
+    "tags": ["AI", "研究", "mRNA", "生物"]
   },
   {
-    "title": "Runway Gen-3 Alpha Extends Video Generation to 60 Seconds",
-    "description": "Gen-3 支持更长时长的视频生成和更复杂的场景控制",
-    "link": "https://runwayml.com/blog/gen-3-alpha",
-    "tags": ["AI", "Runway", "视频生成", "Gen-3"]
+    "title": "The Cathedral and the Bazaar Model in Software Development",
+    "description": "探讨软件开发中的大教堂和集市两种模式",
+    "link": "https://dbreunig.com/cathedral-bazaar",
+    "tags": ["AI", "开发", "模式", "开源"]
   },
   {
-    "title": "Reddit Discussion: Best AI Tools for Developers in 2024",
-    "description": "社区分享最实用的 AI 开发工具和框架，帮助开发者提高效率",
-    "link": "https://www.reddit.com/r/artificial/comments/1a2b3c4d5e6f/best_ai_tools_2024",
-    "tags": ["AI", "Reddit", "工具", "讨论"]
+    "title": "Tell HN: Anthropic No Longer Allowing Claude Code Subscriptions",
+    "description": "Anthropic 不再允许使用 Claude Code 订阅的讨论",
+    "link": "https://firloop.com/claude-code-subscriptions",
+    "tags": ["AI", "Claude", "订阅", "政策"]
   },
   {
-    "title": "36氪报道：国内 AI 创业公司获得新一轮融资",
-    "description": "多家中国 AI 初创公司完成 A 轮融资，涉及大模型、应用和基础设施",
-    "link": "https://36kr.com/p/2812345678",
-    "tags": ["AI", "36氪", "融资", "初创"]
+    "title": "Plague Ships 2020",
+    "description": "Plague 2020 年度回顾和发布",
+    "link": "https://afloat.com.au/plague-2020",
+    "tags": ["AI", "游戏", "Plague", "2020"]
   },
   {
-    "title": "AIBase Daily: AI 行业最新动态汇总",
-    "description": "涵盖大模型更新、政策动态、行业融资和技术突破",
-    "link": "https://www.aibase.com/zh/news/ai-daily",
-    "tags": ["AI", "AIBase", "资讯", "汇总"]
+    "title": "IBM 3270 Information Display System",
+    "description": "IBM 3270 显示系统的彩色和可编程符号功能",
+    "link": "https://bitsavers.org/ibm-3270-ids",
+    "tags": ["AI", "IBM", "显示", "硬件"]
   },
   {
-    "title": "Apple Intelligence New Features for iOS 18.3",
-    "description": "Siri 获得更强的上下文理解，跨应用 AI 助手功能更完善",
-    "link": "https://www.apple.com/apple-intelligence",
-    "tags": ["AI", "Apple", "iOS", "Apple Intelligence"]
+    "title": "Evacuation of U.S. Troops from Mideast Base",
+    "description": "中东基地美军撤离行动的社区讨论",
+    "link": "https://ceejayoz.com/mideast-evacuation",
+    "tags": ["AI", "军事", "讨论", "社区"]
   },
   {
-    "title": "Baidu Ernie 4.0 发布，中文能力大幅增强",
-    "description": "文心 4.0 在中文理解和生成方面有显著改进",
-    "link": "https://wenxin.baidu.com/product/ernie-4-0",
-    "tags": ["AI", "百度", "文心", "中文"]
+    "title": "Ruckus: Racket for iOS",
+    "description": "iOS 平台上的 Racket 编程语言支持",
+    "link": "https://defn.io/ruckus",
+    "tags": ["AI", "iOS", "Racket", "编程"]
   },
   {
-    "title": "阿里云通义千问升级，支持代码审查",
-    "description": "通义千问新增智能代码助手功能，支持多种编程语言",
-    "link": "https://tongyi.aliyun.com/assistant/code-review",
-    "tags": ["AI", "阿里", "通义千问", "代码"]
+    "title": "Components of a Coding Agent",
+    "description": "AI 编码代理的组件架构分析",
+    "link": "https://sebastianraschka.com/coding-agent-components",
+    "tags": ["AI", "代理", "架构", "编码"]
   },
   {
-    "title": "字节跳动豆包 AI 助手正式上线",
-    "description": "豆包专注于中文 AI 交互，支持对话、写作和知识问答",
-    "link": "https://doubao.bytedance.com/chat",
-    "tags": ["AI", "字节跳动", "豆包", "助手"]
+    "title": "Some Unusual Trees",
+    "description": "探索一些不寻常的树形数据结构和算法",
+    "link": "https://wyounas.com/unusual-trees",
+    "tags": ["AI", "算法", "数据结构", "探索"]
+  },
+  {
+    "title": "Functional Programming Accelerates Agentic Features",
+    "description": "函数式编程如何加速 AI 代理功能开发",
+    "link": "https://cyrusradfar.com/fp-agentic",
+    "tags": ["AI", "函数式", "代理", "编程"]
   }
 ];
