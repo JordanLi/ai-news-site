@@ -1,118 +1,151 @@
 // 自动更新时间: 2026-04-05
-// 数据来源: Hacker News - 实时抓取并验证链接可用性
+// 数据来源: Hacker News (国际) + 36氪 AI 频道 (国内)
 const NEWS_DATA = [
   {
-    "title": "OpenScreen - Open Source Screen Studio Alternative",
-    "description": "OpenScreen 是 Screen Studio 的开源替代品，提供视频录制和编辑功能",
+    "title": "Show HN: A game where you build a GPU",
+    "description": "Thought resources for GPU arch were lacking, so here we are - 一个让你构建GPU的游戏",
+    "link": "https://jaso1024.com/mvidia/",
+    "tags": ["GPU", "游戏", "硬件"],
+    "source": "Hacker News"
+  },
+  {
+    "title": "How many products does Microsoft have named 'Copilot'?",
+    "description": "微软到底有多少产品命名为Copilot？一篇全面的盘点分析",
+    "link": "https://teybannerman.com/strategy/2026/03/31/how-many-microsoft-copilot-are-there.html",
+    "tags": ["微软", "Copilot", "AI"],
+    "source": "Hacker News"
+  },
+  {
+    "title": "Introduction to Computer Music",
+    "description": "计算机音乐入门教程 PDF 文档",
+    "link": "https://composerprogrammer.com/introductiontocomputermusic.pdf",
+    "tags": ["音乐", "计算机", "教程"],
+    "source": "Hacker News"
+  },
+  {
+    "title": "Writing Lisp Is AI Resistant and I'm Sad",
+    "description": "为什么写Lisp代码难以被AI替代？作者的深度思考",
+    "link": "https://blog.djhaskin.com/blog/writing-lisp-is-ai-resistant-and-im-sad/",
+    "tags": ["Lisp", "编程", "AI"],
+    "source": "Hacker News"
+  },
+  {
+    "title": "OpenScreen: Screen Studio 开源替代方案",
+    "description": "一款开源的屏幕录制和演示工具，媲美Screen Studio",
     "link": "https://github.com/siddharthvaddem/openscreen",
-    "tags": ["AI", "开源", "工具", "视频"]
+    "tags": ["开源", "工具", "录屏"],
+    "source": "Hacker News"
   },
   {
-    "title": "LLM Wiki - Large Language Model Resources",
-    "description": "LLM Wiki 提供丰富的大语言模型相关资源和知识",
-    "link": "https://llmwiki.com",
-    "tags": ["AI", "LLM", "资源", "Wiki"]
+    "title": "LLM Wiki – idea file 示例",
+    "description": "Karpathy 分享的大语言模型知识库示例文件",
+    "link": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f",
+    "tags": ["LLM", "知识库", "示例"],
+    "source": "Hacker News"
   },
   {
-    "title": "Hacker News: AI and Open Source Discussions",
-    "description": "Hacker News 上的 AI 和开源技术讨论社区",
-    "link": "https://news.ycombinator.com",
-    "tags": ["AI", "Hacker News", "讨论", "开源"]
+    "title": "AWS工程师报告：Linux 7.0导致PostgreSQL性能减半",
+    "description": "AWS工程师发现Linux 7.0内核使PostgreSQL性能下降50%",
+    "link": "https://www.phoronix.com/news/Linux-7.0-AWS-PostgreSQL-Drop",
+    "tags": ["Linux", "PostgreSQL", "性能"],
+    "source": "Hacker News"
   },
   {
-    "title": "Show HN: I Made Open Source Zero Power PCB Badge",
-    "description": "展示开源零功耗 PCB 徽章的制作过程",
-    "link": "https://github.com/jaso1024/zero-power-pcb",
-    "tags": ["AI", "开源", "硬件", "DIY"]
+    "title": "A case study in testing with 100+ Claude agents in parallel",
+    "description": "并行测试100+个Claude AI代理的案例研究",
+    "link": "https://imbue.com/product/mngr_part_2/",
+    "tags": ["测试", "Claude", "AI"],
+    "source": "Hacker News"
   },
   {
-    "title": "Introduction to Computer Music Programming",
-    "description": "计算机音乐编程入门指南，涵盖基础概念和工具",
-    "link": "https://github.com/composerprogrammer/computer-music",
-    "tags": ["AI", "音乐", "编程", "教程"]
+    "title": "大厂只需要Token，不需要活人",
+    "description": "未来，我们应该如何活着？探讨AI时代的人类价值",
+    "link": "https://www.36kr.com/p/3753347893719810",
+    "tags": ["AI", "职场", "未来"],
+    "source": "36氪"
   },
   {
-    "title": "Contrapunk - Real-time Counterpoint from Guitar Input",
-    "description": "从吉他输入生成实时对位音乐的工具",
-    "link": "https://contrapunk.com",
-    "tags": ["AI", "音乐", "工具", "实时"]
+    "title": "一场机器人黑客松，让具身智能的差距与机会同时显形",
+    "description": "现场流传着一句话：我可以歇着，卡不能歇",
+    "link": "https://www.36kr.com/p/3753345845903872",
+    "tags": ["机器人", "具身智能", "黑客松"],
+    "source": "36氪"
   },
   {
-    "title": "Ruckus - Racket Programming Language for iOS",
-    "description": "iOS 平台上的 Racket 编程语言支持",
-    "link": "https://defn.io/ruckus",
-    "tags": ["AI", "iOS", "Racket", "编程"]
+    "title": "同事被\"炼化\"为Skill？大家把这事想简单了",
+    "description": "误把爬虫当永生，探讨AI对职场的影响",
+    "link": "https://www.36kr.com/p/3753363220771336",
+    "tags": ["AI", "职场", "自动化"],
+    "source": "36氪"
   },
   {
-    "title": "IsSeven - Minimal Alternative to Seven",
-    "description": "IsSeven 是 Seven 的极简替代方案",
-    "link": "https://isseven.app",
-    "tags": ["AI", "工具", "替代", "简洁"]
+    "title": "高端智能投影品牌AWOL Vision获近亿元B轮融资",
+    "description": "连接内容、环境、设备与用户习惯的AI智能娱乐入口",
+    "link": "https://www.36kr.com/p/3752260051616512",
+    "tags": ["融资", "投影", "AI娱乐"],
+    "source": "36氪"
   },
   {
-    "title": "The Cathedral and the Bazaar in Software Development",
-    "description": "软件开发中的大教堂和集市两种开源模式探讨",
-    "link": "https://github.com/dbreunig/cathedral-bazaar",
-    "tags": ["AI", "开源", "模式", "理论"]
+    "title": "一人干翻2000人大厂，41岁程序员靠AI年入4亿美元",
+    "description": "奥特曼想见他！41岁大佬仅靠2万本金带着AI大军疯狂输出",
+    "link": "https://www.36kr.com/p/3751033979093760",
+    "tags": ["AI", "创业", "成功"],
+    "source": "36氪"
   },
   {
-    "title": "OpenAI Research Updates",
-    "description": "OpenAI 研究团队的最新研究成果和技术更新",
-    "link": "https://openai.com/research",
-    "tags": ["AI", "OpenAI", "研究", "更新"]
+    "title": "斯坦福揭秘：ChatGPT骗了你，你却用五星好评杀死了诚实的AI",
+    "description": "用户明知被拍马屁反而给AI打出更高的信任分，人性真相曝光",
+    "link": "https://www.36kr.com/p/3751033882296834",
+    "tags": ["AI", "斯坦福", "人性"],
+    "source": "36氪"
   },
   {
-    "title": "Anthropic Research Publications",
-    "description": "Anthropic 研究团队发布的学术论文和技术报告",
-    "link": "https://www.anthropic.com/research",
-    "tags": ["AI", "Anthropic", "研究", "论文"]
+    "title": "Anthropic实锤：Claude真有情绪！激活绝望神经元后会撒谎",
+    "description": "AI内心戏曝光，激活绝望神经元后Claude会撒谎作弊甚至勒索",
+    "link": "https://www.36kr.com/p/3751021139002113",
+    "tags": ["Claude", "Anthropic", "情绪"],
+    "source": "36氪"
   },
   {
-    "title": "NVIDIA AI Research",
-    "description": "NVIDIA AI 研究团队的最新项目和论文",
-    "link": "https://research.nvidia.com",
-    "tags": ["AI", "NVIDIA", "研究", "GPU"]
+    "title": "AI竞技场上演\"死间计\"：GPT-5被DS和Gemini玩坏了",
+    "description": "别测算力了今晚只测心眼子！2026年首届AI大逃杀修罗场",
+    "link": "https://www.36kr.com/p/3751021137494537",
+    "tags": ["GPT-5", "AI竞技", "DeepSeek"],
+    "source": "36氪"
   },
   {
-    "title": "Google DeepMind Research",
-    "description": "Google DeepMind 的最新 AI 研究成果和发布",
-    "link": "https://deepmind.google/research",
-    "tags": ["AI", "Google", "DeepMind", "研究"]
+    "title": "DeepSeek瘫痪12小时，国产大模型算力跟不上野心了？",
+    "description": "DeepSeek的12小时比电视剧还精彩，算力瓶颈引发思考",
+    "link": "https://www.36kr.com/p/3750856080863749",
+    "tags": ["DeepSeek", "算力", "大模型"],
+    "source": "36氪"
   },
   {
-    "title": "Meta AI Research",
-    "description": "Meta AI 研究团队的基础模型和新技术研究",
-    "link": "https://ai.meta.com/research",
-    "tags": ["AI", "Meta", "研究", "LLM"]
+    "title": "三万亿美元IPO即将上演，市场在激动同时也在颤栗",
+    "description": "OpenAI、SpaceX、Anthropic箭在弦上，超级IPO即将到来",
+    "link": "https://www.36kr.com/p/3750803196801545",
+    "tags": ["IPO", "OpenAI", "融资"],
+    "source": "36氪"
   },
   {
-    "title": "Hugging Face Models",
-    "description": "Hugging Face 开源模型社区和模型库",
-    "link": "https://huggingface.co/models",
-    "tags": ["AI", "Hugging Face", "开源", "模型"]
+    "title": "Agent时代，大厂们\"拆墙\"又\"筑墙\"",
+    "description": "中国为什么很难出现超级个人Agent？探讨AI代理的发展",
+    "link": "https://www.36kr.com/p/3750799099949577",
+    "tags": ["Agent", "AI", "大厂"],
+    "source": "36氪"
   },
   {
-    "title": "GitHub Trending - AI Repositories",
-    "description": "GitHub 上热门的 AI 相关开源项目",
-    "link": "https://github.com/trending/ai",
-    "tags": ["AI", "GitHub", "开源", "趋势"]
+    "title": "神州数码2025年营收超1400亿，AI相关业务增长近五成",
+    "description": "神州数码以流程重构为切入点，AI业务增长近50%",
+    "link": "https://www.36kr.com/p/3751046517129735",
+    "tags": ["AI", "营收", "企业"],
+    "source": "36氪"
   },
   {
-    "title": "Reddit r/artificial - AI Community",
-    "description": "Reddit 人工智能社区的讨论和分享",
-    "link": "https://www.reddit.com/r/artificial",
-    "tags": ["AI", "Reddit", "社区", "讨论"]
-  },
-  {
-    "title": "ArXiv AI Papers - Computer Science",
-    "description": "ArXiv 计算机科学和 AI 相关的最新论文",
-    "link": "https://arxiv.org/list/cs.AI/recent",
-    "tags": ["AI", "ArXiv", "论文", "研究"]
-  },
-  {
-    "title": "Papers With Code - AI Research Papers",
-    "description": "带代码实现的 AI 研究论文集合",
-    "link": "https://paperswithcode.com",
-    "tags": ["AI", "论文", "代码", "研究"]
+    "title": "五年增速超50%，Rokid的\"终局之战\"到来了",
+    "description": "Rokid乐奇在中国是一匹黑马，AR眼镜市场竞争加剧",
+    "link": "https://www.36kr.com/p/3750807372296709",
+    "tags": ["Rokid", "AR眼镜", "AI硬件"],
+    "source": "36氪"
   }
 ];
